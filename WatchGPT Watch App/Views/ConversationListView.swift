@@ -6,6 +6,7 @@ struct ConversationListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Conversation.updatedAt, order: .reverse) private var conversations: [Conversation]
     @State private var selectedConversation: Conversation?
+    @State private var showSettings = false
 
     var body: some View {
         NavigationStack {
@@ -17,8 +18,21 @@ struct ConversationListView: View {
                 }
             }
             .navigationTitle("Chats")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showSettings = true
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                            .foregroundStyle(Theme.secondaryText)
+                    }
+                }
+            }
             .navigationDestination(item: $selectedConversation) { conversation in
                 ChatView(conversation: conversation)
+            }
+            .navigationDestination(isPresented: $showSettings) {
+                SettingsView()
             }
         }
     }

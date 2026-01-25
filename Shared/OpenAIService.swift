@@ -173,7 +173,10 @@ final class OpenAIService {
     private enum Constants {
         static let chatCompletionsURL = "https://api.openai.com/v1/chat/completions"
         static let ttsURL = "https://api.openai.com/v1/audio/speech"
-        static let chatModel = "gpt-4o"
+        static let defaultChatModel = "gpt-5.2"
+        static var chatModel: String {
+            UserDefaults.standard.string(forKey: "selectedModel") ?? defaultChatModel
+        }
         static let ttsModel = "tts-1"
         static let ttsVoice = "alloy"
         static let ttsFormat = "aac"

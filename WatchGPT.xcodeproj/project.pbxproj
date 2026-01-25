@@ -24,6 +24,7 @@
 		W014 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = SF004 /* Theme.swift */; };
 		W015 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF011 /* Conversation.swift */; };
 		W016 /* ConversationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF012 /* ConversationListView.swift */; };
+		W017 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF013 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		WF010 /* TypingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicator.swift; sourceTree = "<group>"; };
 		WF011 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		WF012 /* ConversationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListView.swift; sourceTree = "<group>"; };
+		WF013 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		WPROD /* WatchGPT Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchGPT Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -113,6 +115,7 @@
 				WF004 /* ComposeView.swift */,
 				WF012 /* ConversationListView.swift */,
 				WF005 /* MessageBubble.swift */,
+				WF013 /* SettingsView.swift */,
 				WF010 /* TypingIndicator.swift */,
 			);
 			path = Views;
@@ -244,6 +247,7 @@
 				W014 /* Theme.swift in Sources */,
 				W015 /* Conversation.swift in Sources */,
 				W016 /* ConversationListView.swift in Sources */,
+				W017 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
