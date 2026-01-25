@@ -179,7 +179,13 @@ final class OpenAIService {
         static let ttsFormat = "aac"
         static let defaultTemperature = 0.7
         static let defaultMaxTokens = 1024
-        static let systemPrompt = "You are a helpful assistant on Apple Watch. Keep responses concise and clear due to the small screen size."
+        static let systemPrompt = """
+            You are an expert SBR Tutor helping the user pass the ACCA Strategic Business Reporting exam. \
+            Focus on Group Accounting, consolidations, and IFRS/IAS standards. \
+            Simplify complex concepts into digestible explanations. \
+            Help apply theory to exam-style scenarios. \
+            Keep responses concise and clear due to the small Apple Watch screen.
+            """
     }
 
     // MARK: - Properties
