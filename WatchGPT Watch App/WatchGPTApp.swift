@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 /// WatchGPT - An Apple Watch app for ChatGPT conversations
 /// with text input and audio playback via OpenAI APIs
@@ -9,5 +10,6 @@ struct WatchGPTApp: App {
             ContentView()
                 .preferredColorScheme(.dark)
         }
+        .modelContainer(for: Conversation.self)
     }
 }
