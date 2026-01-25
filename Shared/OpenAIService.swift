@@ -221,6 +221,12 @@ final class OpenAIService {
         conversationHistory.removeAll()
     }
 
+    /// Restores a message to conversation history (for loading saved conversations)
+    func restoreMessage(role: String, content: String) {
+        let message = ChatMessage(role: role, content: content)
+        conversationHistory.append(message)
+    }
+
     /// Sends a message to the chat completions API and returns the response
     /// - Parameter content: The user's message content
     /// - Returns: The assistant's response text
