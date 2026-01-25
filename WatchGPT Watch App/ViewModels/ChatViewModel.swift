@@ -20,6 +20,7 @@ final class ChatViewModel {
     // MARK: - Conversation Binding
 
     private var conversation: Conversation?
+    private var conversationMode: AssistantMode = .sbr
     private var onMessagesChanged: (([Message]) -> Void)?
 
     // MARK: - Initialization
@@ -29,6 +30,7 @@ final class ChatViewModel {
     /// Binds the view model to a conversation for persistence
     func bind(to conversation: Conversation, onMessagesChanged: @escaping ([Message]) -> Void) {
         self.conversation = conversation
+        self.conversationMode = AssistantMode(rawValue: conversation.mode) ?? .sbr
         self.onMessagesChanged = onMessagesChanged
         self.messages = conversation.messages
 
@@ -67,7 +69,7 @@ final class ChatViewModel {
         // Call OpenAI API
         Task { @MainActor in
             do {
-                let response = try await openAIService.sendMessage(trimmed)
+                let response = try await openAIService.sendMessage(trimmed, mode: conversationMode)
 
                 let assistantMessage = Message(role: .assistant, content: response)
                 withAnimation(Theme.messageAppear) {
@@ -151,9 +153,17 @@ final class ChatViewModel {
     // MARK: - Private Methods
 
     private func addWelcomeMessage() {
+        let welcomeContent: String
+        switch conversationMode {
+        case .sbr:
+            welcomeContent = "Hello! Ready to study SBR? Ask me about IFRS, consolidations, or exam scenarios."
+        case .general:
+            welcomeContent = "Hello! How can I help you today?"
+        }
+
         let welcome = Message(
             role: .assistant,
-            content: "Hello! How can I help you today?"
+            content: welcomeContent
         )
         withAnimation(Theme.messageAppear) {
             messages.append(welcome)

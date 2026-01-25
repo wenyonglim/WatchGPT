@@ -7,6 +7,7 @@ struct ConversationListView: View {
     @Query(sort: \Conversation.updatedAt, order: .reverse) private var conversations: [Conversation]
     @State private var selectedConversation: Conversation?
     @State private var showSettings = false
+    @State private var showModePicker = false
 
     var body: some View {
         NavigationStack {
@@ -33,6 +34,11 @@ struct ConversationListView: View {
             }
             .navigationDestination(isPresented: $showSettings) {
                 SettingsView()
+            }
+            .sheet(isPresented: $showModePicker) {
+                ModePickerSheet { mode in
+                    createNewConversation(mode: mode)
+                }
             }
         }
     }
@@ -80,7 +86,7 @@ struct ConversationListView: View {
 
     private var newChatButton: some View {
         Button {
-            createNewConversation()
+            showModePicker = true
         } label: {
             HStack {
                 Image(systemName: "plus.circle.fill")
@@ -95,8 +101,8 @@ struct ConversationListView: View {
 
     // MARK: - Actions
 
-    private func createNewConversation() {
-        let conversation = Conversation()
+    private func createNewConversation(mode: AssistantMode) {
+        let conversation = Conversation(mode: mode.rawValue)
         modelContext.insert(conversation)
         selectedConversation = conversation
     }
@@ -113,18 +119,78 @@ struct ConversationListView: View {
 private struct ConversationRow: View {
     let conversation: Conversation
 
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(conversation.title)
-                .font(.system(.body, design: .rounded))
-                .foregroundStyle(Theme.primaryText)
-                .lineLimit(1)
+    private var mode: AssistantMode {
+        AssistantMode(rawValue: conversation.mode) ?? .sbr
+    }
 
-            Text(conversation.previewTimestamp)
-                .font(.system(.caption2, design: .rounded))
-                .foregroundStyle(Theme.secondaryText)
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: mode.icon)
+                .foregroundStyle(Theme.accent)
+                .font(.system(.caption))
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(conversation.title)
+                    .font(.system(.body, design: .rounded))
+                    .foregroundStyle(Theme.primaryText)
+                    .lineLimit(1)
+
+                Text(conversation.previewTimestamp)
+                    .font(.system(.caption2, design: .rounded))
+                    .foregroundStyle(Theme.secondaryText)
+            }
         }
         .padding(.vertical, 4)
+    }
+}
+
+// MARK: - Mode Picker Sheet
+
+private struct ModePickerSheet: View {
+    @Environment(\.dismiss) private var dismiss
+    let onSelect: (AssistantMode) -> Void
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 12) {
+                Text("Choose Mode")
+                    .font(.system(.headline, design: .rounded))
+                    .foregroundStyle(Theme.primaryText)
+
+                ForEach(AssistantMode.allCases) { mode in
+                    Button {
+                        dismiss()
+                        onSelect(mode)
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(systemName: mode.icon)
+                                .font(.system(.title3))
+                                .foregroundStyle(Theme.accent)
+                                .frame(width: 28)
+
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(mode.displayName)
+                                    .font(.system(.body, design: .rounded))
+                                    .foregroundStyle(Theme.primaryText)
+
+                                Text(mode.description)
+                                    .font(.system(.caption2, design: .rounded))
+                                    .foregroundStyle(Theme.secondaryText)
+                            }
+
+                            Spacer()
+                        }
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 12)
+                        .background(Theme.userBubble)
+                        .cornerRadius(12)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding()
+        }
+        .background(Theme.background)
     }
 }
 

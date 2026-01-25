@@ -1,5 +1,54 @@
 import Foundation
 
+// MARK: - Assistant Mode
+
+/// Available assistant modes with their system prompts
+enum AssistantMode: String, CaseIterable, Identifiable {
+    case sbr = "sbr"
+    case general = "general"
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .sbr: return "SBR Tutor"
+        case .general: return "General"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .sbr: return "book.fill"
+        case .general: return "bubble.left.fill"
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .sbr: return "ACCA exam prep"
+        case .general: return "Helpful assistant"
+        }
+    }
+
+    var systemPrompt: String {
+        switch self {
+        case .sbr:
+            return """
+                You are an expert SBR Tutor helping the user pass the ACCA Strategic Business Reporting exam. \
+                Focus on Group Accounting, consolidations, and IFRS/IAS standards. \
+                Simplify complex concepts into digestible explanations. \
+                Help apply theory to exam-style scenarios. \
+                Keep responses concise and clear due to the small Apple Watch screen.
+                """
+        case .general:
+            return """
+                You are a helpful assistant. \
+                Keep responses concise and clear due to the small Apple Watch screen.
+                """
+        }
+    }
+}
+
 // MARK: - Error Types
 
 /// Errors that can occur when interacting with the OpenAI API
@@ -182,13 +231,6 @@ final class OpenAIService {
         static let ttsFormat = "aac"
         static let defaultTemperature = 0.7
         static let defaultMaxTokens = 1024
-        static let systemPrompt = """
-            You are an expert SBR Tutor helping the user pass the ACCA Strategic Business Reporting exam. \
-            Focus on Group Accounting, consolidations, and IFRS/IAS standards. \
-            Simplify complex concepts into digestible explanations. \
-            Help apply theory to exam-style scenarios. \
-            Keep responses concise and clear due to the small Apple Watch screen.
-            """
     }
 
     // MARK: - Properties
@@ -237,18 +279,20 @@ final class OpenAIService {
     }
 
     /// Sends a message to the chat completions API and returns the response
-    /// - Parameter content: The user's message content
+    /// - Parameters:
+    ///   - content: The user's message content
+    ///   - mode: The assistant mode to use for the system prompt
     /// - Returns: The assistant's response text
     /// - Throws: OpenAIError if the request fails
-    func sendMessage(_ content: String) async throws -> String {
+    func sendMessage(_ content: String, mode: AssistantMode = .sbr) async throws -> String {
         let apiKey = try getAPIKey()
 
         // Add user message to history
         let userMessage = ChatMessage.user(content)
         conversationHistory.append(userMessage)
 
-        // Build messages array with system prompt
-        var messages = [ChatMessage.system(Constants.systemPrompt)]
+        // Build messages array with system prompt based on mode
+        var messages = [ChatMessage.system(mode.systemPrompt)]
         messages.append(contentsOf: conversationHistory)
 
         // Create request body

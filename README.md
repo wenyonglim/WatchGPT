@@ -25,7 +25,7 @@ static let systemPrompt = "Your custom instructions here..."
 
 ## Future Ideas
 
-- [ ] Mode switching UI (SBR Tutor ↔ Personal Advisor)
+- [x] ~~Mode switching UI~~ - Done! Choose SBR Tutor or General when creating new chat
 - [x] ~~Model selector~~ - Done! Settings gear → choose GPT-5.2 or GPT-5-mini
 
 ## Requirements

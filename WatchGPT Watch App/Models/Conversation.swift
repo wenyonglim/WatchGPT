@@ -5,17 +5,20 @@ import SwiftData
 final class Conversation {
     var id: UUID
     var messagesData: Data
+    var mode: String = "sbr"
     var createdAt: Date
     var updatedAt: Date
 
     init(
         id: UUID = UUID(),
         messages: [Message] = [],
+        mode: String = "sbr",
         createdAt: Date = Date(),
         updatedAt: Date = Date()
     ) {
         self.id = id
         self.messagesData = (try? JSONEncoder().encode(messages)) ?? Data()
+        self.mode = mode
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
