@@ -89,12 +89,10 @@ private struct ChatCompletionRequest: Encodable {
     let model: String
     let messages: [ChatMessage]
     let temperature: Double?
-    let maxTokens: Int?
     let maxCompletionTokens: Int?
 
     enum CodingKeys: String, CodingKey {
         case model, messages, temperature
-        case maxTokens = "max_tokens"
         case maxCompletionTokens = "max_completion_tokens"
     }
 }
@@ -254,14 +252,11 @@ final class OpenAIService {
         messages.append(contentsOf: conversationHistory)
 
         // Create request body
-        // GPT-5.2 uses max_completion_tokens, GPT-5-mini uses max_tokens
-        let isGPT5_2 = Constants.chatModel == "gpt-5.2"
         let requestBody = ChatCompletionRequest(
             model: Constants.chatModel,
             messages: messages,
             temperature: Constants.defaultTemperature,
-            maxTokens: isGPT5_2 ? nil : Constants.defaultMaxTokens,
-            maxCompletionTokens: isGPT5_2 ? Constants.defaultMaxTokens : nil
+            maxCompletionTokens: Constants.defaultMaxTokens
         )
 
         // Make request
