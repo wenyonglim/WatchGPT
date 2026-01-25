@@ -23,6 +23,11 @@ static let systemPrompt = "Your custom instructions here..."
 
 **Current mode:** SBR Tutor (ACCA Strategic Business Reporting exam prep)
 
+## Future Ideas
+
+- [ ] Mode switching UI (SBR Tutor ↔ Personal Advisor)
+- [ ] Model selector to switch between GPT-4o / GPT-4o-mini for cost savings
+
 ## Requirements
 
 - watchOS 10.0+
