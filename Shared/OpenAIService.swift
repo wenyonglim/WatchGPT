@@ -252,10 +252,12 @@ final class OpenAIService {
         messages.append(contentsOf: conversationHistory)
 
         // Create request body
+        // GPT-5-mini only supports default temperature (1), so skip it for that model
+        let supportsCustomTemperature = Constants.chatModel == "gpt-5.2"
         let requestBody = ChatCompletionRequest(
             model: Constants.chatModel,
             messages: messages,
-            temperature: Constants.defaultTemperature,
+            temperature: supportsCustomTemperature ? Constants.defaultTemperature : nil,
             maxCompletionTokens: Constants.defaultMaxTokens
         )
 
