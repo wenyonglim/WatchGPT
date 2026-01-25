@@ -26,7 +26,7 @@ static let systemPrompt = "Your custom instructions here..."
 ## Future Ideas
 
 - [ ] Mode switching UI (SBR Tutor ↔ Personal Advisor)
-- [ ] Model selector to switch between GPT-4o / GPT-4o-mini for cost savings
+- [x] ~~Model selector~~ - Done! Settings gear → choose GPT-5.2 or GPT-5-mini
 
 ## Requirements
 
