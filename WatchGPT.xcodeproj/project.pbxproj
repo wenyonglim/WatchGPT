@@ -22,6 +22,7 @@
 		W012 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF009 /* AudioPlayer.swift */; };
 		W013 /* TypingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF010 /* TypingIndicator.swift */; };
 		W014 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = SF004 /* Theme.swift */; };
+		W015 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF011 /* Conversation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		WF008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		WF009 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		WF010 /* TypingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicator.swift; sourceTree = "<group>"; };
+		WF011 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		WPROD /* WatchGPT Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchGPT Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -89,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				WF007 /* Message.swift */,
+				WF011 /* Conversation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				W012 /* AudioPlayer.swift in Sources */,
 				W013 /* TypingIndicator.swift in Sources */,
 				W014 /* Theme.swift in Sources */,
+				W015 /* Conversation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
