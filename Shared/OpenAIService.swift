@@ -89,11 +89,11 @@ private struct ChatCompletionRequest: Encodable {
     let model: String
     let messages: [ChatMessage]
     let temperature: Double?
-    let maxTokens: Int?
+    let maxCompletionTokens: Int?
 
     enum CodingKeys: String, CodingKey {
         case model, messages, temperature
-        case maxTokens = "max_tokens"
+        case maxCompletionTokens = "max_completion_tokens"
     }
 }
 
@@ -256,7 +256,7 @@ final class OpenAIService {
             model: Constants.chatModel,
             messages: messages,
             temperature: Constants.defaultTemperature,
-            maxTokens: Constants.defaultMaxTokens
+            maxCompletionTokens: Constants.defaultMaxTokens
         )
 
         // Make request
