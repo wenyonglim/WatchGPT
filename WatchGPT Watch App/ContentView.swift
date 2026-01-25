@@ -1,9 +1,9 @@
 import SwiftUI
 
-/// Root view that wraps the main chat interface
+/// Root view that shows the conversation list
 struct ContentView: View {
     var body: some View {
-        ChatView()
+        ConversationListView()
     }
 }
 
@@ -11,4 +11,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .modelContainer(for: Conversation.self, inMemory: true)
 }

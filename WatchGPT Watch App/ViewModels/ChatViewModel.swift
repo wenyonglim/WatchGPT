@@ -17,10 +17,31 @@ final class ChatViewModel {
     private let openAIService = OpenAIService.shared
     private let audioPlayer = AudioPlayer.shared
 
+    // MARK: - Conversation Binding
+
+    private var conversation: Conversation?
+    private var onMessagesChanged: (([Message]) -> Void)?
+
     // MARK: - Initialization
 
-    init() {
-        addWelcomeMessage()
+    init() {}
+
+    /// Binds the view model to a conversation for persistence
+    func bind(to conversation: Conversation, onMessagesChanged: @escaping ([Message]) -> Void) {
+        self.conversation = conversation
+        self.onMessagesChanged = onMessagesChanged
+        self.messages = conversation.messages
+
+        // Restore conversation history in OpenAI service
+        openAIService.clearConversation()
+        for message in messages where message.role != .system {
+            openAIService.restoreMessage(role: message.role.rawValue, content: message.content)
+        }
+
+        // Add welcome message if this is a new conversation
+        if messages.isEmpty {
+            addWelcomeMessage()
+        }
     }
 
     // MARK: - Public Methods
@@ -35,6 +56,7 @@ final class ChatViewModel {
         let userMessage = Message(role: .user, content: trimmed)
         withAnimation(Theme.messageAppear) {
             messages.append(userMessage)
+            saveMessages()
         }
 
         // Clear input and show loading
@@ -51,6 +73,7 @@ final class ChatViewModel {
                 withAnimation(Theme.messageAppear) {
                     messages.append(assistantMessage)
                     isLoading = false
+                    saveMessages()
                 }
             } catch {
                 isLoading = false
@@ -63,6 +86,7 @@ final class ChatViewModel {
                 )
                 withAnimation(Theme.messageAppear) {
                     messages.append(errorResponse)
+                    saveMessages()
                 }
             }
         }
@@ -119,6 +143,7 @@ final class ChatViewModel {
         withAnimation {
             messages.removeAll()
             errorMessage = nil
+            saveMessages()
         }
         addWelcomeMessage()
     }
@@ -132,7 +157,12 @@ final class ChatViewModel {
         )
         withAnimation(Theme.messageAppear) {
             messages.append(welcome)
+            saveMessages()
         }
+    }
+
+    private func saveMessages() {
+        onMessagesChanged?(messages)
     }
 
     private func updatePlayingState(for messageID: UUID, isPlaying: Bool) {

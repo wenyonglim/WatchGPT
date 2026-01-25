@@ -2,6 +2,7 @@ import SwiftUI
 
 /// Main chat interface with scrollable message list and floating compose button
 struct ChatView: View {
+    @Bindable var conversation: Conversation
     @State private var viewModel = ChatViewModel()
     @State private var showCompose: Bool = false
     @State private var scrollProxy: ScrollViewProxy?
@@ -17,6 +18,12 @@ struct ChatView: View {
 
             // Floating compose button
             composeButton
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            viewModel.bind(to: conversation) { messages in
+                conversation.messages = messages
+            }
         }
         .sheet(isPresented: $showCompose) {
             ComposeView(
@@ -125,5 +132,7 @@ private struct ComposeButtonStyle: ButtonStyle {
 // MARK: - Preview
 
 #Preview {
-    ChatView()
+    let conversation = Conversation()
+    return ChatView(conversation: conversation)
+        .modelContainer(for: Conversation.self, inMemory: true)
 }
