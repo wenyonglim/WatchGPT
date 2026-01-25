@@ -13,20 +13,16 @@ A standalone Apple Watch app for ChatGPT conversations with text input and TTS a
    ```
 3. Build and run the "WatchGPT Watch App" target
 
-## Customizing the Assistant
+## Assistant Modes
 
-To change the assistant's personality or focus, edit the system prompt in `Shared/OpenAIService.swift`:
+Choose your assistant mode when creating a new chat:
+- **SBR Tutor** - ACCA Strategic Business Reporting exam prep
+- **General** - Helpful general assistant
 
-```swift
-static let systemPrompt = "Your custom instructions here..."
-```
+## Settings
 
-**Current mode:** SBR Tutor (ACCA Strategic Business Reporting exam prep)
-
-## Future Ideas
-
-- [x] ~~Mode switching UI~~ - Done! Choose SBR Tutor or General when creating new chat
-- [x] ~~Model selector~~ - Done! Settings gear → choose GPT-5.2 or GPT-5-mini
+Tap the gear icon to access settings:
+- **Model selector** - Choose GPT-5.2 (smarter) or GPT-5-mini (cheaper)
 
 ## Requirements
 
