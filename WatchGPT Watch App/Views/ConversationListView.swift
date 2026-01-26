@@ -19,8 +19,12 @@ struct ConversationListView: View {
                     conversationList
                 }
             }
-            .navigationTitle("Chats")
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Text("Chats")
+                        .font(.system(.headline, design: .rounded))
+                        .foregroundStyle(Theme.accentColor(nightMode: nightMode))
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showSettings = true
@@ -30,7 +34,6 @@ struct ConversationListView: View {
                     }
                 }
             }
-            .accentColor(Theme.accentColor(nightMode: nightMode))
             .navigationDestination(item: $selectedConversation) { conversation in
                 ChatView(conversation: conversation)
             }

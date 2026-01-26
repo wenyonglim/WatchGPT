@@ -75,9 +75,13 @@ struct SettingsView: View {
         .listStyle(.plain)
         .background(Theme.background)
         .scrollContentBackground(.hidden)
-        .navigationTitle("Settings")
-        .navigationBarTitleDisplayMode(.inline)
-        .accentColor(Theme.accentColor(nightMode: nightMode))
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Text("Settings")
+                    .font(.system(.headline, design: .rounded))
+                    .foregroundStyle(Theme.accentColor(nightMode: nightMode))
+            }
+        }
     }
 }
 
