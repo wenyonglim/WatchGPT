@@ -30,6 +30,7 @@ struct ConversationListView: View {
                     }
                 }
             }
+            .accentColor(Theme.accentColor(nightMode: nightMode))
             .navigationDestination(item: $selectedConversation) { conversation in
                 ChatView(conversation: conversation)
             }
