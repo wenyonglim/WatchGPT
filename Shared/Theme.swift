@@ -8,8 +8,13 @@ enum Theme {
     /// Pure black - OLED battery saver
     static let background = Color.black
 
-    /// User message bubble - subtle dark gray
+    /// User message bubble - subtle dark gray (or pure black in night mode)
     static let userBubble = Color(hex: 0x1C1C1E)
+
+    /// Returns user bubble color - pure black in night mode for minimal light emission
+    static func userBubbleColor(nightMode: Bool) -> Color {
+        nightMode ? background : userBubble
+    }
 
     /// Primary accent - vibrant green for actions
     static let accent = Color(hex: 0x30D158)

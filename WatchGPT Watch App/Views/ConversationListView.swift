@@ -42,6 +42,7 @@ struct ConversationListView: View {
                 }
             }
         }
+        .tint(Theme.accentColor(nightMode: nightMode))
     }
 
     // MARK: - Empty State

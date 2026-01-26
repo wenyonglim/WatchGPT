@@ -39,7 +39,7 @@ struct MessageBubble: View {
         }
     }
 
-    /// User message: right-aligned with dark gray bubble
+    /// User message: right-aligned with dark gray bubble (or black in night mode)
     private var userMessage: some View {
         Text(message.content)
             .font(Theme.body)
@@ -48,7 +48,8 @@ struct MessageBubble: View {
             .padding(.vertical, 10)
             .background(
                 RoundedRectangle(cornerRadius: Theme.bubbleCornerRadius, style: .continuous)
-                    .fill(Theme.userBubble)
+                    .fill(Theme.userBubbleColor(nightMode: nightMode))
+                    .stroke(nightMode ? Theme.nightAccent.opacity(0.3) : Color.clear, lineWidth: 1)
             )
             .multilineTextAlignment(.trailing)
     }
