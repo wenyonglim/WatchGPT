@@ -7,6 +7,7 @@ struct ChatView: View {
     @State private var showCompose: Bool = false
     @State private var scrollProxy: ScrollViewProxy?
     @AppStorage("nightMode") private var nightMode = false
+    @State private var composeButtonOpacity: Double = 1.0
 
     var body: some View {
         ZStack(alignment: .bottom) {
