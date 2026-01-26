@@ -122,7 +122,7 @@ struct ChatView: View {
         .buttonStyle(ComposeButtonStyle())
         .padding(.bottom, 8)
         .disabled(viewModel.isLoading)
-        .opacity(viewModel.isLoading ? 0.6 : 1)
+        .opacity(viewModel.isLoading ? 0.6 : composeButtonOpacity)
         .sensoryFeedback(.impact(flexibility: .soft), trigger: showCompose)
     }
 
