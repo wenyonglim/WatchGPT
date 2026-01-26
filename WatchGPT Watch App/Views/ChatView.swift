@@ -132,6 +132,10 @@ struct ChatView: View {
         withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
             scrollProxy?.scrollTo("bottom", anchor: .bottom)
         }
+        // Ensure button is visible when scrolled to bottom
+        withAnimation(.easeOut(duration: 0.15)) {
+            composeButtonOpacity = 1.0
+        }
     }
 }
 
