@@ -33,14 +33,33 @@ enum AIModel: String, CaseIterable, Identifiable {
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("selectedModel") private var selectedModel = AIModel.gpt5_2.rawValue
+    @AppStorage("nightMode") private var nightMode = false
 
     var body: some View {
         List {
             Section {
+                Toggle(isOn: $nightMode) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "moon.fill")
+                            .foregroundStyle(nightMode ? Theme.nightAccent : Theme.secondaryText)
+                        Text("Night Mode")
+                            .font(.system(.body, design: .rounded))
+                            .foregroundStyle(Theme.primaryText)
+                    }
+                }
+                .tint(Theme.nightAccent)
+            } header: {
+                Text("Display")
+                    .font(.system(.caption2, design: .rounded))
+                    .foregroundStyle(Theme.secondaryText)
+            }
+
+            Section {
                 ForEach(AIModel.allCases) { model in
                     ModelRow(
                         model: model,
-                        isSelected: selectedModel == model.rawValue
+                        isSelected: selectedModel == model.rawValue,
+                        nightMode: nightMode
                     )
                     .contentShape(Rectangle())
                     .onTapGesture {
@@ -66,6 +85,7 @@ struct SettingsView: View {
 private struct ModelRow: View {
     let model: AIModel
     let isSelected: Bool
+    let nightMode: Bool
 
     var body: some View {
         HStack {
@@ -77,7 +97,7 @@ private struct ModelRow: View {
 
                     Text(model.costIndicator)
                         .font(.system(.caption2, design: .rounded))
-                        .foregroundStyle(Theme.accent)
+                        .foregroundStyle(Theme.accentColor(nightMode: nightMode))
                 }
 
                 Text(model.description)
@@ -89,7 +109,7 @@ private struct ModelRow: View {
 
             if isSelected {
                 Image(systemName: "checkmark.circle.fill")
-                    .foregroundStyle(Theme.accent)
+                    .foregroundStyle(Theme.accentColor(nightMode: nightMode))
             }
         }
         .padding(.vertical, 4)
