@@ -8,6 +8,7 @@ struct ComposeView: View {
 
     @State private var appearAnimation: Bool = false
     @FocusState private var isTextFieldFocused: Bool
+    @AppStorage("nightMode") private var nightMode = false
 
     var body: some View {
         NavigationStack {
@@ -53,7 +54,7 @@ struct ComposeView: View {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(Theme.userBubble)
             )
-            .tint(Theme.accent)
+            .tint(Theme.accentColor(nightMode: nightMode))
     }
 
     /// Send button with green accent
@@ -72,7 +73,7 @@ struct ComposeView: View {
             .padding(.vertical, 12)
             .background(
                 Capsule()
-                    .fill(canSend ? Theme.sendButton : Theme.sendButton.opacity(0.4))
+                    .fill(canSend ? Theme.sendButtonColor(nightMode: nightMode) : Theme.sendButtonColor(nightMode: nightMode).opacity(0.4))
             )
         }
         .buttonStyle(.plain)
