@@ -17,10 +17,6 @@ struct MessageBubble: View {
             VStack(alignment: message.isUser ? .trailing : .leading, spacing: 4) {
                 messageContent
             }
-
-            if message.isAssistant {
-                Spacer(minLength: 24)
-            }
         }
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : 12)
