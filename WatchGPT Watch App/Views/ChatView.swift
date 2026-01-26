@@ -72,6 +72,20 @@ struct ChatView: View {
                 .padding(.top, Theme.screenPadding)
             }
             .scrollIndicators(.hidden)
+            .onScrollGeometryChange(for: Double.self) { geometry in
+                // Calculate distance from bottom
+                let contentHeight = geometry.contentSize.height
+                let viewHeight = geometry.visibleRect.height
+                let offsetY = geometry.contentOffset.y
+                let distanceFromBottom = contentHeight - viewHeight - offsetY
+                return distanceFromBottom
+            } action: { oldValue, newValue in
+                // Map distance to opacity: fully visible at bottom (0-30), fade out over 30-100 range
+                let opacity = min(1.0, max(0.0, newValue / 70.0))
+                withAnimation(.easeOut(duration: 0.15)) {
+                    composeButtonOpacity = opacity
+                }
+            }
             .onAppear {
                 scrollProxy = proxy
             }
