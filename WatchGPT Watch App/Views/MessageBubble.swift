@@ -7,6 +7,7 @@ struct MessageBubble: View {
 
     @State private var isPressed: Bool = false
     @State private var appeared: Bool = false
+    @AppStorage("nightMode") private var nightMode = false
 
     var body: some View {
         HStack(alignment: .bottom, spacing: 6) {
@@ -73,13 +74,13 @@ struct MessageBubble: View {
             HStack(spacing: 4) {
                 Image(systemName: message.isPlaying ? "speaker.wave.2.fill" : "speaker.wave.2")
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(message.isPlaying ? Theme.speakerIconActive : Theme.speakerIcon)
+                    .foregroundStyle(message.isPlaying ? Theme.speakerIconActiveColor(nightMode: nightMode) : Theme.speakerIcon)
                     .symbolEffect(.variableColor.iterative, isActive: message.isPlaying)
 
                 if message.isPlaying {
                     Text("Playing")
                         .font(Theme.caption)
-                        .foregroundStyle(Theme.speakerIconActive)
+                        .foregroundStyle(Theme.speakerIconActiveColor(nightMode: nightMode))
                 }
             }
             .padding(.horizontal, 8)
