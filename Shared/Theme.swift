@@ -14,6 +14,14 @@ enum Theme {
     /// Primary accent - vibrant green for actions
     static let accent = Color(hex: 0x30D158)
 
+    /// Night mode accent - dark red for reduced blue light
+    static let nightAccent = Color(hex: 0xD94535)
+
+    /// Returns appropriate accent color based on night mode
+    static func accentColor(nightMode: Bool) -> Color {
+        nightMode ? nightAccent : accent
+    }
+
     /// Primary text - pure white for maximum contrast
     static let primaryText = Color.white
 
@@ -25,9 +33,15 @@ enum Theme {
 
     // MARK: - Semantic Colors
 
-    static let sendButton = accent
+    static let sendButton = accent  // Legacy - use sendButtonColor(nightMode:) for night mode support
+    static func sendButtonColor(nightMode: Bool) -> Color {
+        accentColor(nightMode: nightMode)
+    }
     static let speakerIcon = secondaryText
-    static let speakerIconActive = accent
+    static let speakerIconActive = accent  // Legacy - use speakerIconActiveColor(nightMode:) for night mode support
+    static func speakerIconActiveColor(nightMode: Bool) -> Color {
+        accentColor(nightMode: nightMode)
+    }
     static let typingIndicator = secondaryText
 
     // MARK: - Typography
