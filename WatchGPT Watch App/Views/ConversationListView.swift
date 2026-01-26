@@ -26,7 +26,7 @@ struct ConversationListView: View {
                         showSettings = true
                     } label: {
                         Image(systemName: "gearshape.fill")
-                            .foregroundStyle(Theme.secondaryText)
+                            .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
                     }
                 }
             }
@@ -51,7 +51,7 @@ struct ConversationListView: View {
         VStack(spacing: 16) {
             Text("No conversations yet")
                 .font(.system(.body, design: .rounded))
-                .foregroundStyle(Theme.secondaryText)
+                .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
 
             newChatButton
         }
@@ -135,12 +135,12 @@ private struct ConversationRow: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(conversation.title)
                     .font(.system(.body, design: .rounded))
-                    .foregroundStyle(Theme.primaryText)
+                    .foregroundStyle(Theme.primaryTextColor(nightMode: nightMode))
                     .lineLimit(1)
 
                 Text(conversation.previewTimestamp)
                     .font(.system(.caption2, design: .rounded))
-                    .foregroundStyle(Theme.secondaryText)
+                    .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
             }
         }
         .padding(.vertical, 4)
@@ -159,7 +159,7 @@ private struct ModePickerSheet: View {
             VStack(spacing: 12) {
                 Text("Choose Mode")
                     .font(.system(.headline, design: .rounded))
-                    .foregroundStyle(Theme.primaryText)
+                    .foregroundStyle(Theme.primaryTextColor(nightMode: nightMode))
 
                 ForEach(AssistantMode.allCases) { mode in
                     Button {
@@ -175,18 +175,18 @@ private struct ModePickerSheet: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(mode.displayName)
                                     .font(.system(.body, design: .rounded))
-                                    .foregroundStyle(Theme.primaryText)
+                                    .foregroundStyle(Theme.primaryTextColor(nightMode: nightMode))
 
                                 Text(mode.description)
                                     .font(.system(.caption2, design: .rounded))
-                                    .foregroundStyle(Theme.secondaryText)
+                                    .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
                             }
 
                             Spacer()
                         }
                         .padding(.vertical, 8)
                         .padding(.horizontal, 12)
-                        .background(Theme.userBubble)
+                        .background(Theme.userBubbleColor(nightMode: nightMode))
                         .cornerRadius(12)
                     }
                     .buttonStyle(.plain)

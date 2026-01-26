@@ -45,14 +45,14 @@ struct ComposeView: View {
     private var textField: some View {
         TextField("Message", text: $text, axis: .vertical)
             .font(Theme.body)
-            .foregroundStyle(Theme.primaryText)
+            .foregroundStyle(Theme.primaryTextColor(nightMode: nightMode))
             .focused($isTextFieldFocused)
             .lineLimit(1...4)
             .padding(.horizontal, 12)
             .padding(.vertical, 10)
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Theme.userBubble)
+                    .fill(Theme.userBubbleColor(nightMode: nightMode))
             )
             .tint(Theme.accentColor(nightMode: nightMode))
     }
@@ -93,7 +93,7 @@ struct ComposeView: View {
         } label: {
             Text("Cancel")
                 .font(Theme.body)
-                .foregroundStyle(Theme.secondaryText)
+                .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
         }
     }
 

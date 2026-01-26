@@ -43,7 +43,7 @@ struct MessageBubble: View {
     private var userMessage: some View {
         Text(message.content)
             .font(Theme.body)
-            .foregroundStyle(Theme.primaryText)
+            .foregroundStyle(Theme.primaryTextColor(nightMode: nightMode))
             .padding(.horizontal, Theme.bubblePadding)
             .padding(.vertical, 10)
             .background(
@@ -59,7 +59,7 @@ struct MessageBubble: View {
         VStack(alignment: .leading, spacing: 6) {
             Text(message.content)
                 .font(Theme.body)
-                .foregroundStyle(Theme.primaryText)
+                .foregroundStyle(Theme.primaryTextColor(nightMode: nightMode))
                 .multilineTextAlignment(.leading)
 
             speakerButton

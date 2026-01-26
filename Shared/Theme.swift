@@ -30,8 +30,24 @@ enum Theme {
     /// Primary text - pure white for maximum contrast
     static let primaryText = Color.white
 
+    /// Night mode text - dim red for minimal light emission
+    static let nightText = Color(hex: 0x9E3A3A)
+
+    /// Night mode secondary text - even dimmer red
+    static let nightSecondaryText = Color(hex: 0x6B2828)
+
+    /// Returns primary text color - dim red in night mode
+    static func primaryTextColor(nightMode: Bool) -> Color {
+        nightMode ? nightText : primaryText
+    }
+
     /// Secondary text - muted gray
     static let secondaryText = Color(hex: 0x8E8E93)
+
+    /// Returns secondary text color - dimmer red in night mode
+    static func secondaryTextColor(nightMode: Bool) -> Color {
+        nightMode ? nightSecondaryText : secondaryText
+    }
 
     /// Error state
     static let error = Color(hex: 0xFF453A)

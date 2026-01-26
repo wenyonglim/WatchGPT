@@ -41,17 +41,17 @@ struct SettingsView: View {
                 Toggle(isOn: $nightMode) {
                     HStack(spacing: 8) {
                         Image(systemName: "moon.fill")
-                            .foregroundStyle(nightMode ? Theme.nightAccent : Theme.secondaryText)
+                            .foregroundStyle(nightMode ? Theme.nightAccent : Theme.secondaryTextColor(nightMode: nightMode))
                         Text("Night Mode")
                             .font(.system(.body, design: .rounded))
-                            .foregroundStyle(Theme.primaryText)
+                            .foregroundStyle(Theme.primaryTextColor(nightMode: nightMode))
                     }
                 }
                 .tint(Theme.nightAccent)
             } header: {
                 Text("Display")
                     .font(.system(.caption2, design: .rounded))
-                    .foregroundStyle(Theme.secondaryText)
+                    .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
             }
 
             Section {
@@ -69,7 +69,7 @@ struct SettingsView: View {
             } header: {
                 Text("AI Model")
                     .font(.system(.caption2, design: .rounded))
-                    .foregroundStyle(Theme.secondaryText)
+                    .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
             }
         }
         .listStyle(.plain)
@@ -93,7 +93,7 @@ private struct ModelRow: View {
                 HStack(spacing: 6) {
                     Text(model.displayName)
                         .font(.system(.body, design: .rounded))
-                        .foregroundStyle(Theme.primaryText)
+                        .foregroundStyle(Theme.primaryTextColor(nightMode: nightMode))
 
                     Text(model.costIndicator)
                         .font(.system(.caption2, design: .rounded))
@@ -102,7 +102,7 @@ private struct ModelRow: View {
 
                 Text(model.description)
                     .font(.system(.caption2, design: .rounded))
-                    .foregroundStyle(Theme.secondaryText)
+                    .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
             }
 
             Spacer()
