@@ -49,9 +49,24 @@ Shared/                   # Shared code
 
 OLED-optimized colors defined in `Theme.swift`:
 - Background: Pure black (#000000)
-- User bubbles: Dark gray (#1C1C1E)
-- Accent: Green (#30D158)
+- User bubbles: Dark gray (#1C1C1E) - or pure black in Night Mode
+- Accent: Green (#30D158) - or dark red (#D94535) in Night Mode
+- Text: White - or dim red (#9E3A3A) in Night Mode
 - Animations: Spring (response: 0.35, damping: 0.7)
+
+### Night Mode
+
+Toggle in Settings enables a low-light theme for nighttime use:
+- All accent colors switch to dark red (reduces blue light)
+- Text becomes dim red for minimal light emission
+- User message bubbles become pure black with subtle red border
+- Uses `@AppStorage("nightMode")` for persistence
+- Dynamic colors via `Theme.accentColor(nightMode:)`, `Theme.primaryTextColor(nightMode:)`, etc.
+
+### UI Behaviors
+
+- **Assistant messages**: Full-width (no right margin)
+- **Compose button**: Fades out when scrolling up, reappears at bottom (see `ChatView.swift` `.onScrollGeometryChange`)
 
 ## Scripts
 
