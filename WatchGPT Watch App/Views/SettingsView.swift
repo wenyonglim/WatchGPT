@@ -37,6 +37,14 @@ struct SettingsView: View {
 
     var body: some View {
         List {
+            // Custom title header
+            Section {
+                Text("Settings")
+                    .font(.system(.title3, design: .rounded).weight(.semibold))
+                    .foregroundStyle(Theme.accentColor(nightMode: nightMode))
+                    .listRowBackground(Color.clear)
+            }
+
             Section {
                 Toggle(isOn: $nightMode) {
                     HStack(spacing: 8) {
@@ -75,13 +83,7 @@ struct SettingsView: View {
         .listStyle(.plain)
         .background(Theme.background)
         .scrollContentBackground(.hidden)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Text("Settings")
-                    .font(.system(.headline, design: .rounded))
-                    .foregroundStyle(Theme.accentColor(nightMode: nightMode))
-            }
-        }
+        .navigationTitle("")
     }
 }
 
