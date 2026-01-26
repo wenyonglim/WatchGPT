@@ -6,6 +6,7 @@ struct ChatView: View {
     @State private var viewModel = ChatViewModel()
     @State private var showCompose: Bool = false
     @State private var scrollProxy: ScrollViewProxy?
+    @AppStorage("nightMode") private var nightMode = false
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -93,9 +94,9 @@ struct ChatView: View {
             ZStack {
                 // Button background with subtle glow
                 Circle()
-                    .fill(Theme.accent)
+                    .fill(Theme.accentColor(nightMode: nightMode))
                     .frame(width: 48, height: 48)
-                    .shadow(color: Theme.accent.opacity(0.4), radius: 8, x: 0, y: 2)
+                    .shadow(color: Theme.accentColor(nightMode: nightMode).opacity(0.4), radius: 8, x: 0, y: 2)
 
                 // Plus icon
                 Image(systemName: "plus")

@@ -8,6 +8,7 @@ struct ConversationListView: View {
     @State private var selectedConversation: Conversation?
     @State private var showSettings = false
     @State private var showModePicker = false
+    @AppStorage("nightMode") private var nightMode = false
 
     var body: some View {
         NavigationStack {
@@ -90,7 +91,7 @@ struct ConversationListView: View {
         } label: {
             HStack {
                 Image(systemName: "plus.circle.fill")
-                    .foregroundStyle(Theme.accent)
+                    .foregroundStyle(Theme.accentColor(nightMode: nightMode))
                 Text("New Chat")
                     .font(.system(.body, design: .rounded))
             }
@@ -118,6 +119,7 @@ struct ConversationListView: View {
 
 private struct ConversationRow: View {
     let conversation: Conversation
+    @AppStorage("nightMode") private var nightMode = false
 
     private var mode: AssistantMode {
         AssistantMode(rawValue: conversation.mode) ?? .sbr
@@ -126,7 +128,7 @@ private struct ConversationRow: View {
     var body: some View {
         HStack(spacing: 10) {
             Image(systemName: mode.icon)
-                .foregroundStyle(Theme.accent)
+                .foregroundStyle(Theme.accentColor(nightMode: nightMode))
                 .font(.system(.caption))
 
             VStack(alignment: .leading, spacing: 4) {
@@ -149,6 +151,7 @@ private struct ConversationRow: View {
 private struct ModePickerSheet: View {
     @Environment(\.dismiss) private var dismiss
     let onSelect: (AssistantMode) -> Void
+    @AppStorage("nightMode") private var nightMode = false
 
     var body: some View {
         ScrollView {
@@ -165,7 +168,7 @@ private struct ModePickerSheet: View {
                         HStack(spacing: 12) {
                             Image(systemName: mode.icon)
                                 .font(.system(.title3))
-                                .foregroundStyle(Theme.accent)
+                                .foregroundStyle(Theme.accentColor(nightMode: nightMode))
                                 .frame(width: 28)
 
                             VStack(alignment: .leading, spacing: 2) {
