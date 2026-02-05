@@ -34,6 +34,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("selectedModel") private var selectedModel = AIModel.gpt5_2.rawValue
     @AppStorage("nightMode") private var nightMode = false
+    @State private var showAPIKeyView = false
 
     var body: some View {
         List {
@@ -79,11 +80,41 @@ struct SettingsView: View {
                     .font(.system(.caption2, design: .rounded))
                     .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
             }
+
+            Section {
+                Button {
+                    showAPIKeyView = true
+                } label: {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("API Key")
+                                .font(.system(.body, design: .rounded))
+                                .foregroundStyle(Theme.primaryTextColor(nightMode: nightMode))
+
+                            Text(KeychainService.hasAPIKey() ? "Saved in Keychain" : "Not set")
+                                .font(.system(.caption2, design: .rounded))
+                                .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.system(.caption2, design: .rounded))
+                            .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
+                    }
+                }
+                .buttonStyle(.plain)
+            } header: {
+                Text("Security")
+                    .font(.system(.caption2, design: .rounded))
+                    .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
+            }
         }
         .listStyle(.plain)
         .background(Theme.background)
         .scrollContentBackground(.hidden)
         .navigationTitle("")
+        .navigationDestination(isPresented: $showAPIKeyView) {
+            APIKeyView(onSaved: nil)
+        }
     }
 }
 

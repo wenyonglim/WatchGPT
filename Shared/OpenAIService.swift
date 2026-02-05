@@ -53,6 +53,7 @@ enum AssistantMode: String, CaseIterable, Identifiable {
 
 /// Errors that can occur when interacting with the OpenAI API
 enum OpenAIError: LocalizedError {
+    case missingAPIKey
     case invalidAPIKey
     case networkError(Error)
     case invalidResponse
@@ -64,8 +65,10 @@ enum OpenAIError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
+        case .missingAPIKey:
+            return "Missing API key. Add it in Settings."
         case .invalidAPIKey:
-            return "Invalid API key. Please check your OpenAI API key in Secrets.swift."
+            return "Invalid API key. Please check your API key in Settings."
         case .networkError(let error):
             return "Network error: \(error.localizedDescription)"
         case .invalidResponse:
@@ -231,6 +234,7 @@ final class OpenAIService {
         static let ttsFormat = "aac"
         static let defaultTemperature = 0.7
         static let defaultMaxTokens = 1024
+        static let maxHistoryMessages = 16
     }
 
     // MARK: - Properties
@@ -239,7 +243,7 @@ final class OpenAIService {
     private(set) var conversationHistory: [ChatMessage] = []
 
     /// API key from Secrets
-    private let apiKey = Secrets.openAIAPIKey
+    private let fallbackAPIKey = Secrets.openAIAPIKey
 
     /// URL session for network requests
     private let session: URLSession
@@ -290,6 +294,7 @@ final class OpenAIService {
         // Add user message to history
         let userMessage = ChatMessage.user(content)
         conversationHistory.append(userMessage)
+        trimConversationHistory()
 
         // Build messages array with system prompt based on mode
         var messages = [ChatMessage.system(mode.systemPrompt)]
@@ -306,16 +311,22 @@ final class OpenAIService {
         )
 
         // Make request
-        let response: ChatCompletionResponse = try await performRequest(
-            url: Constants.chatCompletionsURL,
-            body: requestBody,
-            apiKey: apiKey
-        )
+        let response: ChatCompletionResponse
+        do {
+            response = try await performRequest(
+                url: Constants.chatCompletionsURL,
+                body: requestBody,
+                apiKey: apiKey
+            )
+        } catch {
+            removeMessage(id: userMessage.id)
+            throw error
+        }
 
         // Extract response content
         guard let choice = response.choices.first else {
             // Remove the user message since we didn't get a valid response
-            conversationHistory.removeLast()
+            removeMessage(id: userMessage.id)
             throw OpenAIError.emptyResponse
         }
 
@@ -323,6 +334,7 @@ final class OpenAIService {
 
         // Add assistant message to history
         conversationHistory.append(assistantMessage)
+        trimConversationHistory()
 
         return assistantMessage.content
     }
@@ -375,7 +387,17 @@ final class OpenAIService {
 
     /// Gets the API key from Secrets
     private func getAPIKey() throws -> String {
-        return apiKey
+        let keychainKey = KeychainService.getAPIKey()
+        let trimmedKeychainKey = keychainKey?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !trimmedKeychainKey.isEmpty {
+            return trimmedKeychainKey
+        }
+
+        let trimmedFallback = fallbackAPIKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedFallback.isEmpty || trimmedFallback == "sk-your-api-key-here" {
+            throw OpenAIError.missingAPIKey
+        }
+        return trimmedFallback
     }
 
     /// Performs a JSON API request and decodes the response
@@ -437,5 +459,15 @@ final class OpenAIService {
             throw OpenAIError.networkError(error)
         }
     }
-}
 
+    private func trimConversationHistory() {
+        let maxMessages = Constants.maxHistoryMessages
+        conversationHistory = HistoryTrimmer.trim(conversationHistory, maxItems: maxMessages)
+    }
+
+    private func removeMessage(id: UUID) {
+        guard let index = conversationHistory.lastIndex(where: { $0.id == id }) else { return }
+        conversationHistory.remove(at: index)
+    }
+
+}

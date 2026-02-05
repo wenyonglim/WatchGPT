@@ -16,6 +16,7 @@ final class ChatViewModel {
 
     private let openAIService = OpenAIService.shared
     private let audioPlayer = AudioPlayer.shared
+    private let errorMessagePrefix = "Sorry, I couldn't respond."
 
     // MARK: - Conversation Binding
 
@@ -84,7 +85,7 @@ final class ChatViewModel {
                 // Show error as assistant message
                 let errorResponse = Message(
                     role: .assistant,
-                    content: "Sorry, I couldn't respond. \(error.localizedDescription)"
+                    content: "\(errorMessagePrefix) \(error.localizedDescription)"
                 )
                 withAnimation(Theme.messageAppear) {
                     messages.append(errorResponse)
@@ -172,7 +173,13 @@ final class ChatViewModel {
     }
 
     private func saveMessages() {
-        onMessagesChanged?(messages)
+        guard let onMessagesChanged else { return }
+        let filteredMessages = messages.filter { !isErrorMessage($0) }
+        onMessagesChanged(filteredMessages)
+    }
+
+    private func isErrorMessage(_ message: Message) -> Bool {
+        message.role == .assistant && message.content.hasPrefix(errorMessagePrefix)
     }
 
     private func updatePlayingState(for messageID: UUID, isPlaying: Bool) {

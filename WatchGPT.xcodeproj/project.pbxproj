@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		14C8F5912F2690020099A857 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C8F5902F2690020099A857 /* Secrets.swift */; };
 		14C8F5922F2690020099A857 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C8F5902F2690020099A857 /* Secrets.swift */; };
+		T001 /* ConversationPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TF001 /* ConversationPersistenceTests.swift */; };
+		T002 /* HistoryTrimmingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TF002 /* HistoryTrimmingTests.swift */; };
+		T003 /* HistoryTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = SF007 /* HistoryTrimmer.swift */; };
+		T004 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF007 /* Message.swift */; };
+		T005 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF011 /* Conversation.swift */; };
 		I006 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = SF004 /* Theme.swift */; };
 		W001 /* WatchGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF001 /* WatchGPTApp.swift */; };
 		W002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF002 /* ContentView.swift */; };
@@ -25,10 +30,19 @@
 		W015 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF011 /* Conversation.swift */; };
 		W016 /* ConversationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF012 /* ConversationListView.swift */; };
 		W017 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF013 /* SettingsView.swift */; };
+		W018 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = SF005 /* KeychainService.swift */; };
+		W019 /* APIKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF014 /* APIKeyView.swift */; };
+		W020 /* HistoryTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = SF007 /* HistoryTrimmer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		14C8F5902F2690020099A857 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		SF005 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		SF006 /* Secrets.example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Secrets.example.swift"; sourceTree = "<group>"; };
+		SF007 /* HistoryTrimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTrimmer.swift; sourceTree = "<group>"; };
+		TF001 /* ConversationPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationPersistenceTests.swift; sourceTree = "<group>"; };
+		TF002 /* HistoryTrimmingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTrimmingTests.swift; sourceTree = "<group>"; };
+		TPROD /* WatchGPTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatchGPTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		IPROD /* WatchGPT Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchGPT Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		SF001 /* OpenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIService.swift; sourceTree = "<group>"; };
 		SF004 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -45,6 +59,7 @@
 		WF011 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		WF012 /* ConversationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListView.swift; sourceTree = "<group>"; };
 		WF013 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		WF014 /* APIKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyView.swift; sourceTree = "<group>"; };
 		WPROD /* WatchGPT Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchGPT Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -54,6 +69,7 @@
 			children = (
 				WATCHGROUP /* WatchGPT Watch App */,
 				SHAREDGROUP /* Shared */,
+				TESTGROUP /* WatchGPTTests */,
 				PRODGROUP /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,6 +79,7 @@
 			children = (
 				WPROD /* WatchGPT Watch App.app */,
 				IPROD /* WatchGPT Companion.app */,
+				TPROD /* WatchGPTTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -72,9 +89,21 @@
 			children = (
 				SF001 /* OpenAIService.swift */,
 				SF004 /* Theme.swift */,
+				SF005 /* KeychainService.swift */,
 				14C8F5902F2690020099A857 /* Secrets.swift */,
+				SF006 /* Secrets.example.swift */,
+				SF007 /* HistoryTrimmer.swift */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		TESTGROUP /* WatchGPTTests */ = {
+			isa = PBXGroup;
+			children = (
+				TF001 /* ConversationPersistenceTests.swift */,
+				TF002 /* HistoryTrimmingTests.swift */,
+			);
+			path = WatchGPTTests;
 			sourceTree = "<group>";
 		};
 		WATCHGROUP /* WatchGPT Watch App */ = {
@@ -111,6 +140,7 @@
 		WATCHVIEWS /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				WF014 /* APIKeyView.swift */,
 				WF003 /* ChatView.swift */,
 				WF004 /* ComposeView.swift */,
 				WF012 /* ConversationListView.swift */,
@@ -148,6 +178,22 @@
 			productReference = IPROD /* WatchGPT Companion.app */;
 			productType = "com.apple.product-type.application";
 		};
+		TESTTARGET /* WatchGPTTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = TESTCONFIGLIST /* Build configuration list for PBXNativeTarget "WatchGPTTests" */;
+			buildPhases = (
+				TESTSOURCES /* Sources */,
+				TESTRESOURCES /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WatchGPTTests;
+			productName = WatchGPTTests;
+			productReference = TPROD /* WatchGPTTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		WATCHTARGET /* WatchGPT Watch App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = WATCHCONFIGLIST /* Build configuration list for PBXNativeTarget "WatchGPT Watch App" */;
@@ -177,6 +223,9 @@
 					IPHONETARGET = {
 						CreatedOnToolsVersion = 15.0;
 					};
+					TESTTARGET = {
+						CreatedOnToolsVersion = 15.0;
+					};
 					WATCHTARGET = {
 						CreatedOnToolsVersion = 15.0;
 					};
@@ -197,12 +246,20 @@
 			targets = (
 				WATCHTARGET /* WatchGPT Watch App */,
 				IPHONETARGET /* WatchGPT Companion */,
+				TESTTARGET /* WatchGPTTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		IPHONERESOURCES /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		TESTRESOURCES /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -229,6 +286,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		TESTSOURCES /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				T001 /* ConversationPersistenceTests.swift in Sources */,
+				T002 /* HistoryTrimmingTests.swift in Sources */,
+				T003 /* HistoryTrimmer.swift in Sources */,
+				T004 /* Message.swift in Sources */,
+				T005 /* Conversation.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		WATCHSOURCES /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -239,21 +308,57 @@
 				W003 /* ChatView.swift in Sources */,
 				W004 /* ComposeView.swift in Sources */,
 				W005 /* MessageBubble.swift in Sources */,
+				W019 /* APIKeyView.swift in Sources */,
 				W006 /* ChatViewModel.swift in Sources */,
 				W007 /* Message.swift in Sources */,
 				W009 /* OpenAIService.swift in Sources */,
+				W018 /* KeychainService.swift in Sources */,
 				W012 /* AudioPlayer.swift in Sources */,
 				W013 /* TypingIndicator.swift in Sources */,
 				W014 /* Theme.swift in Sources */,
 				W015 /* Conversation.swift in Sources */,
 				W016 /* ConversationListView.swift in Sources */,
 				W017 /* SettingsView.swift in Sources */,
+				W020 /* HistoryTrimmer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		TESTDEBUG /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = S9UABHT2Q8;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.watchgpt.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		TESTRELEASE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = S9UABHT2Q8;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.watchgpt.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		IPHONEDEBUG /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -433,6 +538,7 @@
 		WATCHDEBUG /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -496,6 +602,15 @@
 			buildConfigurations = (
 				IPHONEDEBUG /* Debug */,
 				IPHONERELEASE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		TESTCONFIGLIST /* Build configuration list for PBXNativeTarget "WatchGPTTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				TESTDEBUG /* Debug */,
+				TESTRELEASE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

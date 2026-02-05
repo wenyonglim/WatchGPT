@@ -5,7 +5,7 @@ A standalone Apple Watch app for ChatGPT conversations with text input and TTS a
 ## Setup
 
 1. Clone the repo and open `WatchGPT.xcodeproj` in Xcode
-2. Create `Shared/Secrets.swift` with your OpenAI API key:
+2. Create `Shared/Secrets.swift` with your OpenAI API key (copy from `Shared/Secrets.example.swift`), or enter your key in Settings on-device (stored in Keychain):
    ```swift
    enum Secrets {
        static let openAIAPIKey = "sk-your-api-key-here"
