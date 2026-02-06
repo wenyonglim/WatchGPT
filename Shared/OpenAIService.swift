@@ -226,6 +226,7 @@ final class OpenAIService {
         static let chatCompletionsURL = "https://api.openai.com/v1/chat/completions"
         static let ttsURL = "https://api.openai.com/v1/audio/speech"
         static let defaultChatModel = "gpt-5.2"
+        static let placeholderAPIKey = "sk-your-api-key-here"
         static var chatModel: String {
             UserDefaults.standard.string(forKey: "selectedModel") ?? defaultChatModel
         }
@@ -242,23 +243,17 @@ final class OpenAIService {
     /// Conversation history for maintaining context
     private(set) var conversationHistory: [ChatMessage] = []
 
-    /// API key from Secrets
+    /// Fallback API key value from local secrets file.
     private let fallbackAPIKey = Secrets.openAIAPIKey
 
     /// URL session for network requests
     private let session: URLSession
 
     /// JSON encoder configured for API requests
-    private let encoder: JSONEncoder = {
-        let encoder = JSONEncoder()
-        return encoder
-    }()
+    private let encoder = JSONEncoder()
 
     /// JSON decoder configured for API responses
-    private let decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        return decoder
-    }()
+    private let decoder = JSONDecoder()
 
     // MARK: - Initialization
 
@@ -280,6 +275,7 @@ final class OpenAIService {
     func restoreMessage(role: String, content: String) {
         let message = ChatMessage(role: role, content: content)
         conversationHistory.append(message)
+        trimConversationHistory()
     }
 
     /// Sends a message to the chat completions API and returns the response
@@ -387,17 +383,13 @@ final class OpenAIService {
 
     /// Gets the API key from Secrets
     private func getAPIKey() throws -> String {
-        let keychainKey = KeychainService.getAPIKey()
-        let trimmedKeychainKey = keychainKey?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        if !trimmedKeychainKey.isEmpty {
-            return trimmedKeychainKey
+        if let key = normalizedAPIKey(KeychainService.getAPIKey()) {
+            return key
         }
-
-        let trimmedFallback = fallbackAPIKey.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmedFallback.isEmpty || trimmedFallback == "sk-your-api-key-here" {
-            throw OpenAIError.missingAPIKey
+        if let key = normalizedAPIKey(fallbackAPIKey), key != Constants.placeholderAPIKey {
+            return key
         }
-        return trimmedFallback
+        throw OpenAIError.missingAPIKey
     }
 
     /// Performs a JSON API request and decodes the response
@@ -468,6 +460,12 @@ final class OpenAIService {
     private func removeMessage(id: UUID) {
         guard let index = conversationHistory.lastIndex(where: { $0.id == id }) else { return }
         conversationHistory.remove(at: index)
+    }
+
+    private func normalizedAPIKey(_ value: String?) -> String? {
+        guard let value else { return nil }
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : trimmed
     }
 
 }

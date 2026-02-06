@@ -31,7 +31,6 @@ enum AIModel: String, CaseIterable, Identifiable {
 
 /// Settings view for configuring app preferences
 struct SettingsView: View {
-    @Environment(\.dismiss) private var dismiss
     @AppStorage("selectedModel") private var selectedModel = AIModel.gpt5_2.rawValue
     @AppStorage("nightMode") private var nightMode = false
     @State private var showAPIKeyView = false

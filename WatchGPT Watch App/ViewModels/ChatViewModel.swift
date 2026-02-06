@@ -20,7 +20,6 @@ final class ChatViewModel {
 
     // MARK: - Conversation Binding
 
-    private var conversation: Conversation?
     private var conversationMode: AssistantMode = .sbr
     private var onMessagesChanged: (([Message]) -> Void)?
 
@@ -30,14 +29,20 @@ final class ChatViewModel {
 
     /// Binds the view model to a conversation for persistence
     func bind(to conversation: Conversation, onMessagesChanged: @escaping ([Message]) -> Void) {
-        self.conversation = conversation
         self.conversationMode = AssistantMode(rawValue: conversation.mode) ?? .sbr
         self.onMessagesChanged = onMessagesChanged
-        self.messages = conversation.messages
+
+        // Keep only durable messages in memory/persistence. Local-only messages
+        // (welcome/error placeholders) are rendered at runtime but not stored.
+        let durableMessages = conversation.messages.filter(isDurableMessage)
+        self.messages = durableMessages
+        if durableMessages.count != conversation.messages.count {
+            saveMessages()
+        }
 
         // Restore conversation history in OpenAI service
         openAIService.clearConversation()
-        for message in messages where message.role != .system {
+        for message in durableMessages where message.role != .system {
             openAIService.restoreMessage(role: message.role.rawValue, content: message.content)
         }
 
@@ -109,9 +114,7 @@ final class ChatViewModel {
 
         // Stop any currently playing audio
         audioPlayer.stop()
-        for i in messages.indices {
-            messages[i].isPlaying = false
-        }
+        setAllMessagesPlaying(false)
 
         // Start playing this message
         updatePlayingState(for: message.id, isPlaying: true)
@@ -133,9 +136,7 @@ final class ChatViewModel {
     /// Stops any currently playing audio
     func stopAudio() {
         audioPlayer.stop()
-        for i in messages.indices {
-            messages[i].isPlaying = false
-        }
+        setAllMessagesPlaying(false)
     }
 
     /// Clears the conversation and starts fresh
@@ -154,17 +155,9 @@ final class ChatViewModel {
     // MARK: - Private Methods
 
     private func addWelcomeMessage() {
-        let welcomeContent: String
-        switch conversationMode {
-        case .sbr:
-            welcomeContent = "Hello! Ready to study SBR? Ask me about IFRS, consolidations, or exam scenarios."
-        case .general:
-            welcomeContent = "Hello! How can I help you today?"
-        }
-
         let welcome = Message(
             role: .assistant,
-            content: welcomeContent
+            content: welcomeMessageContent
         )
         withAnimation(Theme.messageAppear) {
             messages.append(welcome)
@@ -174,16 +167,35 @@ final class ChatViewModel {
 
     private func saveMessages() {
         guard let onMessagesChanged else { return }
-        let filteredMessages = messages.filter { !isErrorMessage($0) }
-        onMessagesChanged(filteredMessages)
+        onMessagesChanged(messages.filter(isDurableMessage))
     }
 
-    private func isErrorMessage(_ message: Message) -> Bool {
-        message.role == .assistant && message.content.hasPrefix(errorMessagePrefix)
+    private var welcomeMessageContent: String {
+        switch conversationMode {
+        case .sbr:
+            return "Hello! Ready to study SBR? Ask me about IFRS, consolidations, or exam scenarios."
+        case .general:
+            return "Hello! How can I help you today?"
+        }
+    }
+
+    private func isDurableMessage(_ message: Message) -> Bool {
+        guard message.role == .assistant else { return message.role == .user }
+        return !isLocalOnlyAssistantMessage(message)
+    }
+
+    private func isLocalOnlyAssistantMessage(_ message: Message) -> Bool {
+        message.content == welcomeMessageContent || message.content.hasPrefix(errorMessagePrefix)
     }
 
     private func updatePlayingState(for messageID: UUID, isPlaying: Bool) {
         if let index = messages.firstIndex(where: { $0.id == messageID }) {
+            messages[index].isPlaying = isPlaying
+        }
+    }
+
+    private func setAllMessagesPlaying(_ isPlaying: Bool) {
+        for index in messages.indices {
             messages[index].isPlaying = isPlaying
         }
     }

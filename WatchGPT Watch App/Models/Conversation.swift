@@ -3,6 +3,14 @@ import SwiftData
 
 @Model
 final class Conversation {
+    private static let encoder = JSONEncoder()
+    private static let decoder = JSONDecoder()
+    private static let previewFormatter: RelativeDateTimeFormatter = {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .abbreviated
+        return formatter
+    }()
+
     var id: UUID
     var messagesData: Data
     var mode: String = "sbr"
@@ -17,7 +25,7 @@ final class Conversation {
         updatedAt: Date = Date()
     ) {
         self.id = id
-        self.messagesData = (try? JSONEncoder().encode(messages)) ?? Data()
+        self.messagesData = Self.encode(messages)
         self.mode = mode
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -25,10 +33,10 @@ final class Conversation {
 
     var messages: [Message] {
         get {
-            (try? JSONDecoder().decode([Message].self, from: messagesData)) ?? []
+            Self.decode(messagesData)
         }
         set {
-            messagesData = (try? JSONEncoder().encode(newValue)) ?? Data()
+            messagesData = Self.encode(newValue)
             updatedAt = Date()
         }
     }
@@ -42,8 +50,14 @@ final class Conversation {
     }
 
     var previewTimestamp: String {
-        let formatter = RelativeDateTimeFormatter()
-        formatter.unitsStyle = .abbreviated
-        return formatter.localizedString(for: updatedAt, relativeTo: Date())
+        Self.previewFormatter.localizedString(for: updatedAt, relativeTo: Date())
+    }
+
+    private static func encode(_ messages: [Message]) -> Data {
+        (try? encoder.encode(messages)) ?? Data()
+    }
+
+    private static func decode(_ data: Data) -> [Message] {
+        (try? decoder.decode([Message].self, from: data)) ?? []
     }
 }
