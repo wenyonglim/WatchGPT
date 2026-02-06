@@ -8,6 +8,8 @@ enum KeychainService {
 
     private static let account = "openai_api_key"
 
+    static let didChangeNotification = Notification.Name("KeychainService.didChangeAPIKey")
+
     static func getAPIKey() -> String? {
         var query = baseQuery()
         query[kSecReturnData as String] = kCFBooleanTrue
@@ -37,12 +39,15 @@ enum KeychainService {
             guard addStatus == errSecSuccess else {
                 throw KeychainError.unhandled(status: addStatus)
             }
+            notifyKeyDidChange()
             return
         }
 
         guard status == errSecSuccess else {
             throw KeychainError.unhandled(status: status)
         }
+
+        notifyKeyDidChange()
     }
 
     static func deleteAPIKey() throws {
@@ -50,6 +55,8 @@ enum KeychainService {
         guard status == errSecSuccess || status == errSecItemNotFound else {
             throw KeychainError.unhandled(status: status)
         }
+
+        notifyKeyDidChange()
     }
 
     static func hasAPIKey() -> Bool {
@@ -63,6 +70,10 @@ enum KeychainService {
             kSecAttrService as String: service,
             kSecAttrAccount as String: account,
         ]
+    }
+
+    private static func notifyKeyDidChange() {
+        NotificationCenter.default.post(name: didChangeNotification, object: nil)
     }
 }
 

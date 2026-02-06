@@ -23,5 +23,6 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(WatchAPIKeySyncManager())
         .modelContainer(for: Conversation.self, inMemory: true)
 }

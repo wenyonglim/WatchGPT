@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		14C8F5912F2690020099A857 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C8F5902F2690020099A857 /* Secrets.swift */; };
 		14C8F5922F2690020099A857 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C8F5902F2690020099A857 /* Secrets.swift */; };
 		T001 /* ConversationPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TF001 /* ConversationPersistenceTests.swift */; };
 		T002 /* HistoryTrimmingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TF002 /* HistoryTrimmingTests.swift */; };
 		T003 /* HistoryTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = SF007 /* HistoryTrimmer.swift */; };
 		T004 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF007 /* Message.swift */; };
 		T005 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF011 /* Conversation.swift */; };
+		I001 /* WatchGPTCompanionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = IF001 /* WatchGPTCompanionApp.swift */; };
+		I002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = IF002 /* ContentView.swift */; };
+		I003 /* CompanionKeyTransferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = IF003 /* CompanionKeyTransferManager.swift */; };
+		I004 /* APIKeyTransferPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = SF008 /* APIKeyTransferPayload.swift */; };
 		W001 /* WatchGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF001 /* WatchGPTApp.swift */; };
 		W002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF002 /* ContentView.swift */; };
 		W003 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF003 /* ChatView.swift */; };
@@ -32,6 +35,8 @@
 		W018 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = SF005 /* KeychainService.swift */; };
 		W019 /* APIKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF014 /* APIKeyView.swift */; };
 		W020 /* HistoryTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = SF007 /* HistoryTrimmer.swift */; };
+		W021 /* WatchAPIKeySyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = WF015 /* WatchAPIKeySyncManager.swift */; };
+		W022 /* APIKeyTransferPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = SF008 /* APIKeyTransferPayload.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,9 +44,14 @@
 		SF005 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		SF006 /* Secrets.example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Secrets.example.swift"; sourceTree = "<group>"; };
 		SF007 /* HistoryTrimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTrimmer.swift; sourceTree = "<group>"; };
+		SF008 /* APIKeyTransferPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyTransferPayload.swift; sourceTree = "<group>"; };
 		TF001 /* ConversationPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationPersistenceTests.swift; sourceTree = "<group>"; };
 		TF002 /* HistoryTrimmingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTrimmingTests.swift; sourceTree = "<group>"; };
 		TPROD /* WatchGPTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatchGPTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		IPROD /* WatchGPT Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchGPT Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		IF001 /* WatchGPTCompanionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchGPTCompanionApp.swift; sourceTree = "<group>"; };
+		IF002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		IF003 /* CompanionKeyTransferManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionKeyTransferManager.swift; sourceTree = "<group>"; };
 		SF001 /* OpenAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIService.swift; sourceTree = "<group>"; };
 		SF004 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		WF001 /* WatchGPTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchGPTApp.swift; sourceTree = "<group>"; };
@@ -58,6 +68,7 @@
 		WF012 /* ConversationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListView.swift; sourceTree = "<group>"; };
 		WF013 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		WF014 /* APIKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyView.swift; sourceTree = "<group>"; };
+		WF015 /* WatchAPIKeySyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAPIKeySyncManager.swift; sourceTree = "<group>"; };
 		WPROD /* WatchGPT Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchGPT Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -66,16 +77,28 @@
 			isa = PBXGroup;
 			children = (
 				WATCHGROUP /* WatchGPT Watch App */,
+				IPHONEGROUP /* WatchGPT Companion */,
 				SHAREDGROUP /* Shared */,
 				TESTGROUP /* WatchGPTTests */,
 				PRODGROUP /* Products */,
 			);
 			sourceTree = "<group>";
 		};
+		IPHONEGROUP /* WatchGPT Companion */ = {
+			isa = PBXGroup;
+			children = (
+				IF001 /* WatchGPTCompanionApp.swift */,
+				IF002 /* ContentView.swift */,
+				IF003 /* CompanionKeyTransferManager.swift */,
+			);
+			path = "WatchGPT Companion";
+			sourceTree = "<group>";
+		};
 		PRODGROUP /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				WPROD /* WatchGPT Watch App.app */,
+				IPROD /* WatchGPT Companion.app */,
 				TPROD /* WatchGPTTests.xctest */,
 			);
 			name = Products;
@@ -90,6 +113,7 @@
 				14C8F5902F2690020099A857 /* Secrets.swift */,
 				SF006 /* Secrets.example.swift */,
 				SF007 /* HistoryTrimmer.swift */,
+				SF008 /* APIKeyTransferPayload.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -130,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				WF009 /* AudioPlayer.swift */,
+				WF015 /* WatchAPIKeySyncManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -159,6 +184,22 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		IPHONETARGET /* WatchGPT Companion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = IPHONECONFIGLIST /* Build configuration list for PBXNativeTarget "WatchGPT Companion" */;
+			buildPhases = (
+				IPHONESOURCES /* Sources */,
+				IPHONERESOURCES /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "WatchGPT Companion";
+			productName = "WatchGPT Companion";
+			productReference = IPROD /* WatchGPT Companion.app */;
+			productType = "com.apple.product-type.application";
+		};
 		TESTTARGET /* WatchGPTTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = TESTCONFIGLIST /* Build configuration list for PBXNativeTarget "WatchGPTTests" */;
@@ -201,6 +242,9 @@
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
+					IPHONETARGET = {
+						CreatedOnToolsVersion = 15.0;
+					};
 					TESTTARGET = {
 						CreatedOnToolsVersion = 15.0;
 					};
@@ -223,12 +267,20 @@
 			projectRoot = "";
 			targets = (
 				WATCHTARGET /* WatchGPT Watch App */,
+				IPHONETARGET /* WatchGPT Companion */,
 				TESTTARGET /* WatchGPTTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		IPHONERESOURCES /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		TESTRESOURCES /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -247,6 +299,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		IPHONESOURCES /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				I001 /* WatchGPTCompanionApp.swift in Sources */,
+				I002 /* ContentView.swift in Sources */,
+				I003 /* CompanionKeyTransferManager.swift in Sources */,
+				I004 /* APIKeyTransferPayload.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		TESTSOURCES /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -281,6 +344,8 @@
 				W016 /* ConversationListView.swift in Sources */,
 				W017 /* SettingsView.swift in Sources */,
 				W020 /* HistoryTrimmer.swift in Sources */,
+				W021 /* WatchAPIKeySyncManager.swift in Sources */,
+				W022 /* APIKeyTransferPayload.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +381,67 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		IPHONEDEBUG /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S9UABHT2Q8;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "WatchGPT Companion";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.watchgpt.companion;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		IPHONERELEASE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S9UABHT2Q8;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "WatchGPT Companion";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.watchgpt.companion;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -447,6 +573,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchGPT;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.watchgpt.companion;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -475,6 +602,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchGPT;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.watchgpt.companion;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -495,6 +623,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		IPHONECONFIGLIST /* Build configuration list for PBXNativeTarget "WatchGPT Companion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				IPHONEDEBUG /* Debug */,
+				IPHONERELEASE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		TESTCONFIGLIST /* Build configuration list for PBXNativeTarget "WatchGPTTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -2,9 +2,13 @@ import SwiftUI
 
 struct APIKeyView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var apiKeySyncManager: WatchAPIKeySyncManager
+
     @State private var apiKey: String = KeychainService.getAPIKey() ?? ""
     @State private var errorMessage: String?
     @State private var showKey = false
+    @State private var showManualEntry = false
+
     @AppStorage("nightMode") private var nightMode = false
 
     let onSaved: (() -> Void)?
@@ -12,26 +16,55 @@ struct APIKeyView: View {
     var body: some View {
         List {
             Section {
-                if showKey {
-                    TextField("API Key", text: $apiKey, axis: .vertical)
-                        .textInputAutocapitalization(.never)
-                        .autocorrectionDisabled()
-                        .font(.system(.caption, design: .monospaced))
-                } else {
-                    SecureField("API Key", text: $apiKey)
-                        .textInputAutocapitalization(.never)
-                        .autocorrectionDisabled()
-                        .font(.system(.caption, design: .monospaced))
-                }
+                Text("Use the iPhone companion app to paste and send your API key.")
+                    .font(.system(.caption2, design: .rounded))
+                    .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
 
-                Toggle(isOn: $showKey) {
-                    Text("Show Key")
+                Text(apiKeySyncManager.statusMessage)
+                    .font(.system(.caption2, design: .rounded))
+                    .foregroundStyle(Theme.primaryTextColor(nightMode: nightMode))
+
+                if let lastReceivedAt = apiKeySyncManager.lastReceivedAt {
+                    Text("Last synced: \(lastReceivedAt, style: .time)")
+                        .font(.system(.caption2, design: .rounded))
+                        .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
+                }
+            } header: {
+                Text("iPhone Sync (Recommended)")
+                    .font(.system(.caption2, design: .rounded))
+                    .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
+            }
+
+            Section {
+                Toggle(isOn: $showManualEntry) {
+                    Text("Type on Watch Instead")
                         .font(.system(.caption2, design: .rounded))
                         .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
                 }
                 .tint(Theme.accentColor(nightMode: nightMode))
+
+                if showManualEntry {
+                    if showKey {
+                        TextField("API Key", text: $apiKey, axis: .vertical)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
+                            .font(.system(.caption, design: .monospaced))
+                    } else {
+                        SecureField("API Key", text: $apiKey)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
+                            .font(.system(.caption, design: .monospaced))
+                    }
+
+                    Toggle(isOn: $showKey) {
+                        Text("Show Key")
+                            .font(.system(.caption2, design: .rounded))
+                            .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
+                    }
+                    .tint(Theme.accentColor(nightMode: nightMode))
+                }
             } header: {
-                Text("OpenAI API Key")
+                Text("Manual Fallback")
                     .font(.system(.caption2, design: .rounded))
                     .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
             } footer: {
@@ -79,6 +112,11 @@ struct APIKeyView: View {
                     .foregroundStyle(Theme.secondaryTextColor(nightMode: nightMode))
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: KeychainService.didChangeNotification)) { _ in
+            apiKey = KeychainService.getAPIKey() ?? ""
+            errorMessage = nil
+            onSaved?()
+        }
     }
 
     private func saveKey() {
@@ -108,5 +146,6 @@ struct APIKeyView: View {
 #Preview {
     NavigationStack {
         APIKeyView(onSaved: nil)
+            .environmentObject(WatchAPIKeySyncManager())
     }
 }
